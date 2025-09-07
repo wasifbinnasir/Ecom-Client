@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authApi } from "../services/authApi";
 import authReducer from "../features/auth/authSlice";
+import notificationsReducer from '../features/notifications/notificationsSlice';
 import { baseApi } from "../api/baseApi";
 
 export const store = configureStore({
@@ -8,6 +9,7 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [baseApi.reducerPath]: baseApi.reducer,
     auth: authReducer,
+    notifications: notificationsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()

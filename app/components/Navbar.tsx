@@ -5,6 +5,7 @@ import { IoCartOutline, IoPersonCircle, IoLogOutOutline } from "react-icons/io5"
 import { IoSearchOutline } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoClose } from "react-icons/io5";
+import { MdSpaceDashboard } from "react-icons/md"; // dashboard icon
 import Link from 'next/link';
 import Container from './Container';
 import { useSelector, useDispatch } from 'react-redux';
@@ -23,12 +24,14 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const token = useSelector((state: RootState) => state.auth.token);
+  const roles = useSelector((state: RootState) => state.auth.roles);
   const pathname = usePathname();
 
   const handleLogout = () => {
     dispatch(logout());
   };
 
+  // Hide navbar in dashboard routes
   if (pathname.includes("dashboard")) {
     return null;
   }
@@ -37,7 +40,6 @@ export default function Navbar() {
     <Container className="w-full bg-white px-6 md:px-24 flex justify-between items-center py-4 relative">
       {/* Left Section */}
       <div className="flex items-center gap-3">
-        {/* Burger Icon  */}
         <button 
           className="md:hidden text-2xl"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -45,13 +47,12 @@ export default function Navbar() {
           {menuOpen ? <IoClose /> : <RxHamburgerMenu />}
         </button>
 
-        {/* Logo */}
         <h1 className="text-[28px] md:text-[32px] font-extrabold text-black">
           SHOP.CO
         </h1>
       </div>
 
-      {/* Center Nav links */}
+      {/* Center Nav */}
       <ul className="hidden md:flex items-center gap-x-6">
         {nav.map((link, i) => (
           <li 
@@ -63,7 +64,7 @@ export default function Navbar() {
         ))}
       </ul>
 
-      {/* Search Bar  */}
+      {/* Search */}
       <div className="hidden md:flex bg-[#F0F0F0] px-3 py-2 rounded-4xl w-[250px] lg:w-[557px] items-center gap-x-1">
         <IoSearchOutline className="text-black"/>
         <input 
@@ -76,11 +77,22 @@ export default function Navbar() {
       {/* Right Section */}
       <div className="flex items-center gap-x-3">
         {token ? (
-          <IoLogOutOutline 
-            onClick={handleLogout} 
-            className="text-2xl text-black cursor-pointer"
-            title="Logout"
-          />
+          <>
+            {(roles.includes('admin') || roles.includes('super_admin')) && (
+              <Link href="/dashboard/dashboard">
+                <MdSpaceDashboard 
+                  className="text-2xl text-black cursor-pointer"
+                  title="Dashboard"
+                />
+              </Link>
+            )}
+
+            <IoLogOutOutline 
+              onClick={handleLogout} 
+              className="text-2xl text-black cursor-pointer"
+              title="Logout"
+            />
+          </>
         ) : (
           <Link href="/login">
             <IoPersonCircle className="text-2xl text-black cursor-pointer"/>
@@ -106,7 +118,6 @@ export default function Navbar() {
             </Link>
           ))}
 
-          {/* Search Bar */}
           <div className="bg-[#F0F0F0] px-3 py-2 rounded-4xl flex items-center gap-x-1">
             <IoSearchOutline className="text-black"/>
             <input 

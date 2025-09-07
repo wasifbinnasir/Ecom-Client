@@ -60,12 +60,13 @@ export default function OrderDetailPage() {
   const [selectedStatus, setSelectedStatus] = useState("");
 
   const statusOptions = [
-    { value: "pending", label: "Pending", color: "bg-yellow-500" },
-    { value: "processing", label: "Processing", color: "bg-blue-500" },
-    { value: "shipped", label: "Shipped", color: "bg-purple-500" },
-    { value: "delivered", label: "Delivered", color: "bg-green-500" },
-    { value: "canceled", label: "Canceled", color: "bg-red-500" },
-  ];
+  { value: "pending", label: "Pending", color: "bg-yellow-500" },
+  { value: "confirmed", label: "Confirmed", color: "bg-blue-500" },
+  { value: "shipped", label: "Shipped", color: "bg-purple-500" },
+  { value: "delivered", label: "Delivered", color: "bg-green-500" },
+  { value: "cancelled", label: "Cancelled", color: "bg-red-500" },
+];
+
 
   const handleStatusUpdate = async () => {
     if (!selectedStatus || !order) return;

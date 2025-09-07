@@ -26,6 +26,7 @@
     "react-slick": "^0.31.0",
     "recharts": "^3.1.2",
     "slick-carousel": "^1.8.1",
+    "socket.io-client": "^4.8.1",
     "string-to-color": "^2.2.2"
   },
   "devDependencies": {
@@ -35,6 +36,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/react-slick": "^0.23.13",
+    "@types/socket.io-client": "^1.4.36",
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
     "tailwindcss": "^4",

@@ -29,7 +29,6 @@ export type ProductFormValues = {
   stock?: number;
   type: ProductType;
   category: string;
-  loyaltyPoints?: number;
 };
 
 // Cloudinary config
@@ -75,7 +74,6 @@ export default function ProductForm({
       stock: 0,
       type: "money",
       category: "",
-      loyaltyPoints: 0,
       ...defaultValues,
     },
     mode: "onBlur",
@@ -124,7 +122,10 @@ export default function ProductForm({
   const busy = isSubmitting || creating || updating;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 bg-white p-8 rounded-2xl shadow-lg w-full mx-auto">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-8 bg-white p-8 rounded-2xl shadow-lg w-full mx-auto"
+    >
       {/* Product Info */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
@@ -134,7 +135,9 @@ export default function ProductForm({
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black"
             placeholder="Product name"
           />
-          {errors.name && <p className="text-red-600 text-sm mt-1">{errors.name.message}</p>}
+          {errors.name && (
+            <p className="text-red-600 text-sm mt-1">{errors.name.message}</p>
+          )}
         </div>
         <div>
           <label className="block font-semibold mb-2">Category</label>
@@ -143,7 +146,11 @@ export default function ProductForm({
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black"
             placeholder="e.g. Electronics"
           />
-          {errors.category && <p className="text-red-600 text-sm mt-1">{errors.category.message}</p>}
+          {errors.category && (
+            <p className="text-red-600 text-sm mt-1">
+              {errors.category.message}
+            </p>
+          )}
         </div>
       </div>
 
@@ -155,7 +162,11 @@ export default function ProductForm({
           rows={4}
           placeholder="Product description"
         />
-        {errors.description && <p className="text-red-600 text-sm mt-1">{errors.description.message}</p>}
+        {errors.description && (
+          <p className="text-red-600 text-sm mt-1">
+            {errors.description.message}
+          </p>
+        )}
       </div>
 
       {/* Price & Stock */}
@@ -165,7 +176,10 @@ export default function ProductForm({
           <input
             type="number"
             step="0.01"
-            {...register("price", { required: "Price required", valueAsNumber: true })}
+            {...register("price", {
+              required: "Price required",
+              valueAsNumber: true,
+            })}
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black"
           />
         </div>
@@ -182,7 +196,11 @@ export default function ProductForm({
           <input
             type="number"
             step="0.1"
-            {...register("ratings", { valueAsNumber: true, min: 0, max: 5 })}
+            {...register("ratings", {
+              valueAsNumber: true,
+              min: 0,
+              max: 5,
+            })}
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black"
           />
         </div>
@@ -192,34 +210,38 @@ export default function ProductForm({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
         <div>
           <label className="block font-semibold mb-2">Type</label>
-          <select {...register("type")} className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black">
+          <select
+            {...register("type")}
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black"
+          >
             <option value="money">Money</option>
             <option value="points">Points</option>
             <option value="hybrid">Hybrid</option>
           </select>
         </div>
         <div className="flex items-center gap-2">
-          <input type="checkbox" {...register("onSale")} className="h-4 w-4" id="onSale" />
-          <label htmlFor="onSale" className="font-semibold">On Sale</label>
+          <input
+            type="checkbox"
+            {...register("onSale")}
+            className="h-4 w-4"
+            id="onSale"
+          />
+          <label htmlFor="onSale" className="font-semibold">
+            On Sale
+          </label>
         </div>
         <div>
           <label className="block font-semibold mb-2">Discount %</label>
           <input
             type="number"
-            {...register("discountPercentage", { valueAsNumber: true, min: 0, max: 100 })}
+            {...register("discountPercentage", {
+              valueAsNumber: true,
+              min: 0,
+              max: 100,
+            })}
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black"
           />
         </div>
-      </div>
-
-      {/* Loyalty Points */}
-      <div>
-        <label className="block font-semibold mb-2">Loyalty Points</label>
-        <input
-          type="number"
-          {...register("loyaltyPoints", { valueAsNumber: true, min: 0 })}
-          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black"
-        />
       </div>
 
       {/* Variants */}
@@ -229,14 +251,19 @@ export default function ProductForm({
           <button
             type="button"
             className="px-4 py-2 border rounded-lg hover:bg-gray-100"
-            onClick={() => append({ color: "", images: [], sizes: [], stock: 0 })}
+            onClick={() =>
+              append({ color: "", images: [], sizes: [], stock: 0 })
+            }
           >
             Add Variant
           </button>
         </div>
 
         {fields.map((field, idx) => (
-          <div key={field.id} className="flex bg-gray-50 rounded-lg p-4 gap-4 relative">
+          <div
+            key={field.id}
+            className="flex bg-gray-50 rounded-lg p-4 gap-4 relative"
+          >
             <button
               type="button"
               className="absolute top-2 right-2 text-red-600 hover:text-red-800"
@@ -250,7 +277,9 @@ export default function ProductForm({
               <div>
                 <label className="font-medium">Color</label>
                 <input
-                  {...register(`variants.${idx}.color` as const, { required: true })}
+                  {...register(`variants.${idx}.color` as const, {
+                    required: true,
+                  })}
                   className="w-full px-3 py-2 border rounded-lg"
                   placeholder="Red"
                 />
@@ -259,7 +288,9 @@ export default function ProductForm({
                 <label className="font-medium">Stock</label>
                 <input
                   type="number"
-                  {...register(`variants.${idx}.stock` as const, { valueAsNumber: true })}
+                  {...register(`variants.${idx}.stock` as const, {
+                    valueAsNumber: true,
+                  })}
                   className="w-full px-3 py-2 border rounded-lg"
                 />
               </div>
@@ -273,9 +304,18 @@ export default function ProductForm({
                       className="w-full px-3 py-2 border rounded-lg"
                       placeholder="S, M, L"
                       value={(f.value ?? []).join(", ")}
-                      onChange={(e) => f.onChange(e.target.value.split(",").map((s) => s.trim()))}
+                      onChange={(e) =>
+                        f.onChange(
+                          e.target.value.split(",").map((s) => s.trim())
+                        )
+                      }
                       onBlur={(e) =>
-                        f.onChange(e.target.value.split(",").map((s) => s.trim()).filter(Boolean))
+                        f.onChange(
+                          e.target.value
+                            .split(",")
+                            .map((s) => s.trim())
+                            .filter(Boolean)
+                        )
                       }
                     />
                   )}
@@ -295,7 +335,11 @@ export default function ProductForm({
               />
               <div className="flex flex-wrap gap-2 mt-2">
                 {(watch(`variants.${idx}.images`) ?? []).map((url, i) => (
-                  <img key={i} src={url} className="h-24 w-24 object-cover rounded-lg" />
+                  <img
+                    key={i}
+                    src={url}
+                    className="h-24 w-24 object-cover rounded-lg"
+                  />
                 ))}
               </div>
             </div>
@@ -311,7 +355,10 @@ export default function ProductForm({
         >
           {productId ? "Update Product" : "Create Product"}
         </button>
-        <Link href="/dashboard/products" className="text-gray-600 hover:underline self-center">
+        <Link
+          href="/dashboard/products"
+          className="text-gray-600 hover:underline self-center"
+        >
           Cancel
         </Link>
       </div>

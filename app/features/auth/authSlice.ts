@@ -21,7 +21,6 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.roles = action.payload.roles;
 
-      // 👇 persist token in localStorage
       if (typeof window !== "undefined") {
         localStorage.setItem("token", action.payload.token);
         localStorage.setItem("roles", JSON.stringify(action.payload.roles));
