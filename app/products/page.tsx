@@ -122,12 +122,12 @@ export default function ProductsPage() {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-3 mt-6">
+          <div className="flex items-center justify-between gap-3 mt-6 py-3 px-4 ">
             {/* Previous Button */}
             <button
               disabled={page === 1}
               onClick={() => setPage((prev) => Math.max(1, prev - 1))}
-              className="px-3 py-2 border rounded-lg disabled:opacity-50 flex items-center gap-1"
+              className="px-3 py-2 border border-gray-400 rounded-lg disabled:opacity-50 flex items-center gap-1"
             >
               <AiOutlineLeft />
               Prev
@@ -139,8 +139,8 @@ export default function ProductsPage() {
                 <button
                   key={pNum}
                   onClick={() => setPage(pNum)}
-                  className={`px-3 py-2 rounded-lg border ${
-                    pNum === page ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'
+                  className={`px-3 py-1.5 rounded-lg ${
+                    pNum === page ? 'bg-[#0000000F] text-black' : 'hover:bg-gray-100'
                   }`}
                 >
                   {pNum}
@@ -152,7 +152,7 @@ export default function ProductsPage() {
             <button
               disabled={page === totalPages}
               onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
-              className="px-3 py-2 border rounded-lg disabled:opacity-50 flex items-center gap-1"
+              className="px-3 py-2 border border-gray-400 rounded-lg disabled:opacity-50 flex items-center gap-1"
             >
               Next
               <AiOutlineRight />

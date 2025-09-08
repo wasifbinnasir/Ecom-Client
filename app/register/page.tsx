@@ -25,17 +25,22 @@ export default function Register() {
 
   const onSubmit = async (data: RegisterForm) => {
     try {
-      // exclude confirmPassword before sending to API
       const { confirmPassword, ...payload } = data;
-      await registerUser(payload).unwrap();
+      const response = await registerUser(payload).unwrap();
 
+    
       router.push(`/verify-otp?email=${encodeURIComponent(data.email)}`);
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      const message = err?.data?.message;
+
+      if (message?.includes('not verified')) {
+        router.push(`/verify-otp?email=${encodeURIComponent(data.email)}`);
+      } else {
+        console.error(err);
+      }
     }
   };
 
-  // Watch password to validate confirmPassword
   const password = watch('password');
 
   return (

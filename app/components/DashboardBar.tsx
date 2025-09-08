@@ -42,7 +42,6 @@ export default function DashboardNavbar() {
   const unreadCountLocal = useSelector((s: RootState) => s.notifications.unreadCount);
   const itemsLocal = useSelector((s: RootState) => s.notifications.items);
 
-  // Load from API
   const { data: unreadData, refetch: refetchUnread } = useGetUnreadCountQuery();
   const { data: listData, refetch: refetchList } = useGetNotificationsQuery({ page: 1, limit: 20 });
   const [markAllReadApi] = useMarkAllReadMutation();
@@ -64,8 +63,7 @@ export default function DashboardNavbar() {
   }
 }, [dispatch, listData]);
 
-  // To avoid changing your slice too much, we’ll just append on socket and rely
-  // on API count for the badge display in UI.
+
   const effectiveUnread = unreadData?.count ?? unreadCountLocal;
 
   useEffect(() => {
@@ -81,9 +79,9 @@ export default function DashboardNavbar() {
         read: payload.read,
       }));
       setToastMsg(`${payload.title}: ${payload.message}`);
-      // refresh server counts
+
       refetchUnread();
-      // Optionally refetch list if modal open
+     
       if (modalOpen) refetchList();
     };
 
@@ -95,7 +93,6 @@ export default function DashboardNavbar() {
 
   const handleOpenModal = async () => {
     dispatch(setModalOpen(true));
-    // mark all read on server, then sync
     await markAllReadApi().unwrap().catch(() => {});
     dispatch(markAllReadLocal());
     refetchUnread();
@@ -218,7 +215,7 @@ export default function DashboardNavbar() {
                           </div>
                           {n.orderId ? (
                             <Link
-                              href={`/admin/orders/${n.orderId}`}
+                              href={`/dashboard/orders/${n.orderId}`}
                               className="text-blue-600 text-sm hover:underline whitespace-nowrap"
                               onClick={() => dispatch(setModalOpen(false))}
                             >

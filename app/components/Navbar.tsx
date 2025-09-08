@@ -5,7 +5,7 @@ import { IoCartOutline, IoPersonCircle, IoLogOutOutline } from "react-icons/io5"
 import { IoSearchOutline } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoClose } from "react-icons/io5";
-import { MdSpaceDashboard } from "react-icons/md"; // dashboard icon
+import { MdSpaceDashboard } from "react-icons/md";
 import Link from 'next/link';
 import Container from './Container';
 import { useSelector, useDispatch } from 'react-redux';
@@ -47,9 +47,10 @@ export default function Navbar() {
           {menuOpen ? <IoClose /> : <RxHamburgerMenu />}
         </button>
 
+       <Link href="/">
         <h1 className="text-[28px] md:text-[32px] font-extrabold text-black">
           SHOP.CO
-        </h1>
+        </h1></Link>
       </div>
 
       {/* Center Nav */}

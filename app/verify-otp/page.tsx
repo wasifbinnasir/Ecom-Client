@@ -31,7 +31,7 @@ export default function VerifyOtp() {
   const onSubmit = async (data: OtpForm) => {
     try {
       await verifyOtp({ email, otp: data.otp }).unwrap();
-      setSuccessMessage('✅ OTP verified! Redirecting to login...');
+      setSuccessMessage('OTP verified! Redirecting to login...');
       setTimeout(() => router.push('/login'), 1500);
     } catch (err) {
       console.log('OTP verification failed', err);
